@@ -7,14 +7,15 @@
 // @lc code=start
 import java.util.ArrayList;
 import java.util.List;
-import java.util.HashSet;
 class Solution {
     public List<Integer> findDisappearedNumbers(int[] nums) {
-        HashSet<Integer> set = new HashSet<>();
         List<Integer> list = new ArrayList<>();
-        for (int x : nums) set.add(x);
-        for (int i = 1; i <= nums.length; i++) {
-            if (!set.contains(i)) list.add(i);   
+        int[] appeared = new int[nums.length+1];
+        for (int i = 0; i < nums.length; i++) {
+            appeared[nums[i]]++;
+        }
+        for (int i = 1; i < appeared.length; i++) {
+            if (appeared[i] == 0) list.add(i);
         }
         return list;
     }
