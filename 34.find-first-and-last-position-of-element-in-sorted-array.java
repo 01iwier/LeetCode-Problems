@@ -7,33 +7,32 @@
 // @lc code=start
 class Solution {
     public int[] searchRange(int[] nums, int target) {
-        int x = binarySearch1(nums, target);
-        int y = binarySearch2(nums, target);
-        return new int[] {x, y};
+        return new int[] {binarySearchLower(nums, target), binarySearchHigher(nums, target)};
     }
 
-    public int binarySearch1(int[] nums, int target) {
+    public int binarySearchLower(int[] nums, int target) {
         int index = -1;
         int low = 0;
         int high = nums.length - 1;
         while (low <= high) {
-            int mid = (high + low) / 2;
+            int mid = low + (high - low) / 2;
             if (nums[mid] >= target) {
                 high = mid - 1;
             } else {
                 low = mid + 1;
             }
             if (nums[mid] == target) index = mid;
+            System.out.println(mid);
         }
         return index;
     }
 
-    public int binarySearch2(int[] nums, int target) {
+    public int binarySearchHigher(int[] nums, int target) {
         int index = -1;
         int low = 0;
         int high = nums.length - 1;
         while (low <= high) {
-            int mid = (high + low) / 2;
+            int mid = low + (high - low) / 2;
             if (nums[mid] <= target) {
                 low = mid + 1;
             } else {
