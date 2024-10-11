@@ -5,38 +5,42 @@
  */
 
 // @lc code=start
+
+import java.util.ArrayList;
+import java.util.List;
+
 class Solution {
     public String[] findWords(String[] words) {
-        String[] rows = {"qwertyuiop", "asdfghjkl", "zxcvbnm"};
-        String[] result = {};
+        String[] rowStrings = {"qwertyuiop", "asdfghjkl", "zxcvbnm"};
+        List<String> result = new ArrayList<>();
         int idx = 0;
 
-        for (String word : words) {
-            int row = findRow(word.charAt(0), rows);
-            boolean works = true;
-            for (int i = 0; i < word.length(); i++) {
-                if (!rows[row].contains(Character.toString(word.toLowerCase().charAt(i)))) {
-                    works = false;
+        for (String word: words) {
+            int selectedRow = 0;
+            word = word.toLowerCase();
+            String c = Character.toString(word.charAt(0));
+            for (int i = 0; i < rowStrings.length; i++) {
+                if (rowStrings[i].contains(c)) {
+                    selectedRow = i;
                     break;
+                } 
+            }
+
+            boolean flag = true;
+
+            for (int i = 0; i < word.length(); i++) {
+                c = Character.toString(word.charAt(i));
+                if (!rowStrings[selectedRow].contains(c)) {
+                    flag = false;
                 }
             }
-            if (works) {
-                result[idx] = word;
-                idx++;
-            }
-        }
 
-        return result;
-    }
-
-    public int findRow(char c, String[] rows) {
-        for (int i = 0; i < rows.length; i++) {
-            if (rows[i].contains(Character.toString(c).toLowerCase())) {
-                System.out.println(i);
-                return i;
+            if (flag) {
+                result.add(words[idx]);
             }
+            idx++;
         }
-        return -1;
+        return result.toArray(new String[0]);
     }
 }
 // @lc code=end
